@@ -25,7 +25,7 @@ LABEL "Author" = "Avraaj"
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy the artifacts (.war file) generated from Build stage 1 to the tomcat home folder and name the artifact as ROOT.war
-COPY --from=BUILD_IMAGE vprofile-project/target/vrpofile-v2.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=BUILD_IMAGE vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 
