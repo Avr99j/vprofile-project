@@ -18,6 +18,9 @@ RUN cd vprofile-project && git checkout docker && mvn install
 # Build a docker image from the base tomcat image
 FROM tomcat:9-jre11
 
+LABEL "Project" = "Vprofile"
+LABEL "Author" = "Avraaj"
+
 # Delete the default artifacts present in the home folder of the tomcat base image to replace with our project artifacts
 RUN rm -rf /usr/local/tomcat/webapps/*
 
