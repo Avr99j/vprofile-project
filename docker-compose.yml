@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  vprodb:
+    build:
+      context: ./Docker-files/db
+    image: avraaj/vprofiledb
+    container_name: vprodb
+    ports:
+      - "3306:3306"
+    volumes:
+      - vprodbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=vprodbpass
+  
+  vprocache01:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  vpromq01:
+    image: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEAGULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=GUEST
+
+  vproapp:
+    build:
+      context: ./Docker-files/app
+    image: avraaj/vprofileapp
+    container_name: vproapp
+    ports:
+      - "8080:8080"
+    volumes:
+      - vproappdata:/usr/local/tomcat/webapps
+
+  vproweb:
+    build:
+      context: ./Docker-files/web
+    image: avraaj/vprofileweb
+    container_name: vproweb
+    ports:
+      - "80:80"
+
+  
+  # Because the volumes are mentioned above 'vprodbdata' and 'vproappdata', below is where we create the volumes to be mounted to on the host machine
+
+volumes:
+# To create the volumes in the docker engine itself, mention '{}'
+  vprodbdata: {}
+  vproappdata: {}
